@@ -1,3 +1,13 @@
+// This is a pure function that takes in the state and the action that occurs and returns a new state
+function todos(state = [], action) {
+  if (action.todo === "ADD_TODO") {
+    // modify the state by concatenating the todo to it
+    // .concat() returns us a NEW array
+    return state.concat([action.todo]);
+  }
+  return state;
+}
+
 // This function will create a brand new store
 function createStore() {
   // The store will have four parts:
@@ -21,12 +31,12 @@ function createStore() {
   const subscribe = listener => {
     // push the listener passed to subscribe() from user into the listeners array:
     listeners.push(listener);
-
     /*
         Now we want to create a way for the user to unsubscribe from certain subscribe calls. Return a function to the user that let's them do this. When the user invokes this function, call the filter() function to filter out the listener they want to unsibscribe from, in this case 'listener':
     */
     return () => {
       listeners = listeners.filter(l => l !== listener);
+      // The user can store this returned function into a variable when they call store.subscribe(...) and invoke it to remove the listener they passed into the subscribe() method call.
     };
   };
 
