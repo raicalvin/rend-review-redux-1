@@ -40,8 +40,19 @@ function createStore() {
     };
   };
 
+  // ITEM 4: The dispatch() function is responsible for updating the state in our store using the action that occured
+  const dispatch = action => {
+    // dispatch() can call the pure reducer function, todos(), passing it the current state and the action
+    state = todos(state, action);
+
+    // Since the state potentially changed, make sure to loop through the listeners and invoke each one of them
+    listeners.forEach(listener => listener());
+  };
+
   // Whenever createStore() is invoked, we want to return an object where one of the properties on this object will allow the user to get the state
   return {
-    getState
+    getState,
+    subscribe,
+    dispatch
   };
 }
