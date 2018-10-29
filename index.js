@@ -67,7 +67,7 @@ function todos(state = [], action) {
 
 // EXAMPLE = = = = = = = = = = = = =
 
-// We can create a store by calling createStore() and passing in the reducer pure function above
+// We can create a store object by calling createStore() and passing in the reducer pure function above
 // All a reducer function does is take in the state and the action that occurred and returns a modified new state
 const store = createStore(todos);
 
@@ -85,5 +85,15 @@ store.dispatch({
     id: 0,
     name: "Learn Redux",
     complete: false
+  }
+});
+
+// So anytime we need to update the state, we can call the dispatch() function passing it the action that occurred.
+store.dispatch({
+  type: "ADD_TODO",
+  todo: {
+    id: 1,
+    name: "Read a book",
+    complete: true
   }
 });
