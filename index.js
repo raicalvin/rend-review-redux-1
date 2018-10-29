@@ -65,5 +65,25 @@ function todos(state = [], action) {
   return state;
 }
 
+// EXAMPLE = = = = = = = = = = = = =
+
 // We can create a store by calling createStore() and passing in the reducer pure function above
+// All a reducer function does is take in the state and the action that occurred and returns a modified new state
 const store = createStore(todos);
+
+// We can call store.subscribe() and pass it a LISTENER function to run whenever the state changes
+let unsubscribe = store.subscribe(() => {
+  console.log("The new state is: ", store.getState());
+});
+
+console.log(unsubscribe);
+
+// Next, we can call dispatch() and pass it an ACTION so we can see how the store will change
+store.dispatch({
+  type: "ADD_TODO",
+  todo: {
+    id: 0,
+    name: "Learn Redux",
+    complete: false
+  }
+});
