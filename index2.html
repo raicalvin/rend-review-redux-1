@@ -199,31 +199,6 @@
 
         console.log(unsubscribe);
 
-        // Next, we can call dispatch() and pass it an ACTION so we can see how the store will change
-        // store.dispatch(
-        //     addTodoAction({
-        //         id: 0,
-        //         name: "Walk the dog",
-        //         complete: false
-        //     })
-        // );
-
-        // So anytime we need to update the state, we can call the dispatch() function passing it the action that occurred.
-        // store.dispatch(
-        //     addTodoAction({
-        //         id: 1,
-        //         name: "Read a book",
-        //         complete: true
-        //     })
-        // );
-
-        // store.dispatch(
-        //     addGoalAction({
-        //         id: 0,
-        //         name: "Learn Redux"
-        //     })
-        // );
-
         // DOM CODE - FUNCTIONS FOR ADDING TODOS AND GOALS
         function addTodo() {
             const input = document.getElementById('todo')
@@ -251,6 +226,14 @@
         document.getElementById('todoBtn').addEventListener('click', addTodo)
         document.getElementById('goalBtn').addEventListener('click', addGoal)
 
+        // Create helper function to create a remove button to add to our lists
+        function createRemoveButton(onClick) {
+            const removeBtn = document.createElement('button')
+            removeBtn.innerHTML = "X"
+            removeBtn.addEventListener('click', onClick)
+            return removeBtn
+        }
+
         // Functions to add the items to the DOM and so that they show up in the DOM
         function addTodoToDOM(todo) {
             const node = document.createElement('li');
@@ -260,6 +243,10 @@
             node.addEventListener('click', () => {
                 store.dispatch(toggleTodoAction(todo.id))
             })
+            const removeBtn = createRemoveButton(() => {
+                store.dispatch(removeTodoAction(todo.id))
+            })
+            node.appendChild(removeBtn)
 
             document.getElementById('todos').appendChild(node)
         }
@@ -268,6 +255,11 @@
             const node = document.createElement('li');
             const text = document.createTextNode(goal.name);
             node.appendChild(text);
+            const removeBtn = createRemoveButton(() => {
+                store.dispatch(removeGoalAction(goal.id))
+            })
+            node.appendChild(removeBtn)
+
             document.getElementById('goals').appendChild(node)
         }
     </script>
