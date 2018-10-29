@@ -90,11 +90,20 @@ function goals(state = [], action) {
   }
 }
 
+// Create a new root reducer for the app
+// This returns an object representing the state of our ENTIRE application. Within this new state object, we have state pieces for the todos and goals portions of our app
+function app(state = {}, action) {
+  return {
+    todos: todos(state.todos, action),
+    goals: goals(state.goals, action)
+  };
+}
+
 // EXAMPLE = = = = = = = = = = = = =
 
-// We can create a store object by calling createStore() and passing in the reducer pure function above
+// We can create a store object by calling createStore() and passing in the root reducer pure function above
 // All a reducer function does is take in the state and the action that occurred and returns a modified new state
-const store = createStore(todos);
+const store = createStore(app);
 
 // We can call store.subscribe() and pass it a LISTENER function to run whenever the state changes
 let unsubscribe = store.subscribe(() => {
@@ -120,5 +129,13 @@ store.dispatch({
     id: 1,
     name: "Read a book",
     complete: true
+  }
+});
+
+store.dispatch({
+  type: "ADD_GOAL",
+  goal: {
+    id: 1,
+    name: "Become a Civil Engineer"
   }
 });
