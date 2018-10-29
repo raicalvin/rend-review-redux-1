@@ -55,11 +55,48 @@ function createStore(reducer) {
     APP CODE ====================================================
 */
 
+// Create constants for the action types instead of string literals throughout the code
 const ADD_TODO = "ADD_TODO";
 const REMOVE_TODO = "REMOVE_TODO";
 const TOGGLE_TODO = "TOGGLE_TODO";
 const ADD_GOAL = "ADD_GOAL";
 const REMOVE_GOAL = "REMOVE_GOAL";
+
+// Action creator functions that return action objects with the type
+function addTodoAction(todo) {
+  return {
+    type: ADD_TODO,
+    todo
+  };
+}
+
+function removeTodoAction(id) {
+  return {
+    type: REMOVE_TODO,
+    id
+  };
+}
+
+function toggleTodoAction(id) {
+  return {
+    type: TOGGLE_TODO,
+    id
+  };
+}
+
+function addGoalAction(goal) {
+  return {
+    type: ADD_GOAL,
+    goal
+  };
+}
+
+function removeGoalAction(id) {
+  return {
+    type: REMOVE_GOAL,
+    id
+  };
+}
 
 // This is a pure function that takes in the state and the action that occurs and returns a new state
 function todos(state = [], action) {
@@ -119,29 +156,26 @@ let unsubscribe = store.subscribe(() => {
 console.log(unsubscribe);
 
 // Next, we can call dispatch() and pass it an ACTION so we can see how the store will change
-store.dispatch({
-  type: ADD_TODO,
-  todo: {
+store.dispatch(
+  addTodoAction({
     id: 0,
-    name: "Learn Redux",
+    name: "Walk the dog",
     complete: false
-  }
-});
+  })
+);
 
 // So anytime we need to update the state, we can call the dispatch() function passing it the action that occurred.
-store.dispatch({
-  type: ADD_TODO,
-  todo: {
+store.dispatch(
+  addTodoAction({
     id: 1,
     name: "Read a book",
     complete: true
-  }
-});
+  })
+);
 
-store.dispatch({
-  type: ADD_GOAL,
-  goal: {
-    id: 1,
-    name: "Become a Civil Engineer"
-  }
-});
+store.dispatch(
+  addGoalAction({
+    id: 0,
+    name: "Learn Redux"
+  })
+);
