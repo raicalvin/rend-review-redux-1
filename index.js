@@ -57,6 +57,7 @@ function createStore(reducer) {
 
 // This is a pure function that takes in the state and the action that occurs and returns a new state
 function todos(state = [], action) {
+  // Remember, this is a PURE FUNCTION so it can only used the arguments passed into it to create a new array or modify the passed-in state and return it
   switch (action.type) {
     case "ADD_TODO":
       // modify the state by concatenating the todo to it
@@ -71,6 +72,19 @@ function todos(state = [], action) {
             ? todo
             : Object.assign({}, todo, { complete: !todo.compelte })
       );
+    default:
+      return state;
+  }
+}
+
+// Let's add another list of goals for long-term goals. Now we have two reducers!
+// Remember: REDUCERS are pure functions that take in a state and action and return a new/modified state
+function goals(state = [], action) {
+  switch (action.type) {
+    case "ADD_GOAL":
+      return state.concat([action.goal]);
+    case "REMOVE_GOAL":
+      return state.filter(goal => goal.id !== action.id);
     default:
       return state;
   }
