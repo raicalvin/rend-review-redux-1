@@ -135,21 +135,16 @@
         // }
         // And now get rid of it since we have the checker() middleware below
 
-        // OR Create a middle ware checker below and pass this to Redux
-        function checker(store) {
-            return function (next) {
-                return function (action) {
-                    // We have access to store, next, and action and this is where we can do what we need to in between dispatch and the reducer. 'next' is used if we have more than one middleware else it will be dispatch().
-                    if (action.type === ADD_TODO && action.todo.name.toLowerCase().includes('bitcoin')) {
-                        return alert('Nope, that is a bad idea!');
-                    }
-                    if (action.type === ADD_GOAL && action.goal.name.toLowerCase().includes('bitcoin')) {
-                        return alert('Nope, that is a bad idea!');
-                    }
-
-                    return next(action)
-                }
+        const checker = (store) => (next) => (action) => {
+            // We have access to store, next, and action and this is where we can do what we need to in between dispatch and the reducer. 'next' is used if we have more than one middleware else it will be dispatch().
+            if (action.type === ADD_TODO && action.todo.name.toLowerCase().includes('bitcoin')) {
+                return alert('Nope, that is a bad idea!');
             }
+            if (action.type === ADD_GOAL && action.goal.name.toLowerCase().includes('bitcoin')) {
+                return alert('Nope, that is a bad idea!');
+            }
+
+            return next(action)
         }
 
         // We can create a store object by calling createStore() and passing in the root reducer pure function above
