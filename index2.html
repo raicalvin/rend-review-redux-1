@@ -147,13 +147,22 @@
             return next(action)
         }
 
+        const logger = (store) => (next) => (action) => {
+            console.group(action.type)
+            console.log('The action is ', action);
+            const result = next(action)
+            console.log('The new state: ', store.getState())
+            console.groupEnd()
+            return result
+        }
+
         // We can create a store object by calling createStore() and passing in the root reducer pure function above
         // All a reducer function does is take in the state and the action that occurred and returns a modified new state
         // The combineReducer() function is taking in the todos and goals functions we created above and assigning their state to the appropriate properties listed below:
         const store = Redux.createStore(Redux.combineReducers({
             todos,
             goals
-        }), Redux.applyMiddleware(checker));
+        }), Redux.applyMiddleware(checker, logger));
 
         // We can call store.subscribe() and pass it a LISTENER function to run whenever the state changes
         let unsubscribe = store.subscribe(() => {
