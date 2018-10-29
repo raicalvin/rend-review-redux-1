@@ -55,17 +55,23 @@ function createStore(reducer) {
     APP CODE ====================================================
 */
 
+const ADD_TODO = "ADD_TODO";
+const REMOVE_TODO = "REMOVE_TODO";
+const TOGGLE_TODO = "TOGGLE_TODO";
+const ADD_GOAL = "ADD_GOAL";
+const REMOVE_GOAL = "REMOVE_GOAL";
+
 // This is a pure function that takes in the state and the action that occurs and returns a new state
 function todos(state = [], action) {
   // Remember, this is a PURE FUNCTION so it can only used the arguments passed into it to create a new array or modify the passed-in state and return it
   switch (action.type) {
-    case "ADD_TODO":
+    case ADD_TODO:
       // modify the state by concatenating the todo to it
       // .concat() returns us a NEW array
       return state.concat([action.todo]);
-    case "REMOVE_TODO":
+    case REMOVE_TODO:
       return state.filter(todo => todo.id !== action.id);
-    case "TOGGLE_TODO":
+    case TOGGLE_TODO:
       return state.map(
         todo =>
           todo.id !== action.id
@@ -81,9 +87,9 @@ function todos(state = [], action) {
 // Remember: REDUCERS are pure functions that take in a state and action and return a new/modified state
 function goals(state = [], action) {
   switch (action.type) {
-    case "ADD_GOAL":
+    case ADD_GOAL:
       return state.concat([action.goal]);
-    case "REMOVE_GOAL":
+    case REMOVE_GOAL:
       return state.filter(goal => goal.id !== action.id);
     default:
       return state;
@@ -114,7 +120,7 @@ console.log(unsubscribe);
 
 // Next, we can call dispatch() and pass it an ACTION so we can see how the store will change
 store.dispatch({
-  type: "ADD_TODO",
+  type: ADD_TODO,
   todo: {
     id: 0,
     name: "Learn Redux",
@@ -124,7 +130,7 @@ store.dispatch({
 
 // So anytime we need to update the state, we can call the dispatch() function passing it the action that occurred.
 store.dispatch({
-  type: "ADD_TODO",
+  type: ADD_TODO,
   todo: {
     id: 1,
     name: "Read a book",
@@ -133,7 +139,7 @@ store.dispatch({
 });
 
 store.dispatch({
-  type: "ADD_GOAL",
+  type: ADD_GOAL,
   goal: {
     id: 1,
     name: "Become a Civil Engineer"
